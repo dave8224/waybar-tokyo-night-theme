@@ -1,0 +1,13 @@
+#!/bin/sh
+
+choice=$(nmcli -t -f SSID,SIGNAL,SECURITY dev wifi list --rescan yes | sed "/^:/d" | awk -F: '!seen[$1]++ {print $1 "  " $2 "%  " $3}' | rofi -dmenu -i -p "Wi-Fi")
+
+[ -z "$choice" ] && exit 0
+
+ssid=$(printf "%s\n" "$choice" | sed 's/  [0-9][0-9]*%.*//')
+
+if nmcli -t -f NAME connection show | grep -Fxq "$ssid"; then
+    nmcli connection up "$ssid"
+else
+    nmcli device wifi connect "$ssid"
+fi
