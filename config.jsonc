@@ -139,7 +139,7 @@
     },
 
     "custom/wm": {
-        "format": "◆  KIRO",
+        "format": "◆  Labwc",
         "on-click": "rofi -show drun",
         "tooltip": false
     },
